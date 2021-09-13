@@ -1,0 +1,33 @@
+.mainInput {
+    width: 700px;
+    background-color: #dfe6ed;
+    display: grid;
+    grid-template-areas: 'm i';
+    grid-template-rows: 100px;
+    grid-auto-columns: 80px 200px;
+
+
+}
+
+.miniAva {
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    grid-area: m;
+}
+
+.miniAva img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+}
+
+.input {
+    grid-area: i;
+    padding-top: 35px;
+
+}
+
+.button {
+    margin-left: 257px;
+}
