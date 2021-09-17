@@ -1,29 +1,44 @@
 const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
+const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT"
+const SEND_MESSAGE = "SEND_MESSAGE"
 
 
 let reRenderAll = () => {
     console.log('state changed')
 }
 
-type storeType = {
-    _state:stateType,
+export type storeType = {
+    _state: stateType,
     getState: () => stateType,
     subscribe: (observer: subscribeType) => void
     dispatch: (action: ActionsTypes) => void
 }
-export type ActionsTypes = AddPostActionType | ChangeNewTextActionType
+export type ActionsTypes =
+    AddPostActionType
+    | ChangeNewTextActionType
+    | NewMessageTextActionType
+    | SendMessageActionType
 
-type AddPostActionType ={
+type AddPostActionType = {
     type: 'ADD-POST',
     newPostText: string,
 }
-type ChangeNewTextActionType ={
+type ChangeNewTextActionType = {
     type: 'UPDATE-NEW-POST-TEXT',
     newText: string,
 }
+type NewMessageTextActionType = {
+    type: 'UPDATE_NEW_MESSAGE_TEXT',
+    text: string,
+}
+type SendMessageActionType = {
+    type: 'SEND_MESSAGE'
 
-export let store:storeType = {
+}
+
+
+export let store: storeType = {
     _state: {
         messagesPage: {
             dialogs: [
@@ -34,7 +49,8 @@ export let store:storeType = {
                 {id: 1, message: 'Hi'},
                 {id: 2, message: 'How are u?'},
                 {id: 3, message: 'Where are u?'}
-            ]
+            ],
+            newMessageText: ' '
         },
         profilePage: {
             post: [
@@ -63,6 +79,14 @@ export let store:storeType = {
         } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText
             reRenderAll()
+        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
+            this._state.messagesPage.newMessageText = action.text
+            reRenderAll()
+        } else if (action.type === SEND_MESSAGE) {
+            let body = this._state.messagesPage.newMessageText
+            this._state.messagesPage.messages.push({id: 4, message: body})
+            this._state.messagesPage.newMessageText = ''
+            reRenderAll()
         }
     }
 }
@@ -83,6 +107,7 @@ export type postType = {
 export type messagesPageType = {
     dialogs: Array<dialogsType>
     messages: Array<messagesType>
+    newMessageText: string
 }
 export type profilePageType = {
     post: Array<postType>
@@ -99,20 +124,35 @@ type  subscribeType = () => void
 
 //Создает action creator для wall.tsx
 
-export const addPostActionCreater = (newPostText:string):AddPostActionType => {
+export const addPostActionCreater = (newPostText: string): AddPostActionType => {
     return {
         type: ADD_POST,
         newPostText: newPostText
     }
 }
-export const addNewPostHandlerActionCreater = (newText:string):ChangeNewTextActionType => {
+export const addNewPostHandlerActionCreater = (newText: string): ChangeNewTextActionType => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText: newText
     }
 }
+//Создает action creator для dialogs.tsx
 
-// export type ActionTypes = 'UPDATE-NEW-POST-TEXT' | 'ADD-POST'
+export const sendMessageCreater = (): SendMessageActionType => {
+    return {
+        type: SEND_MESSAGE
+    }
+}
+
+export const updateNewMessageTextCreater = (text: string): NewMessageTextActionType => {
+    return {
+        type: UPDATE_NEW_MESSAGE_TEXT,
+        text: text
+    }
+}
+
+
+
 
 
 
