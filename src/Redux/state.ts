@@ -1,7 +1,5 @@
-const ADD_POST = "ADD-POST"
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT"
-const SEND_MESSAGE = "SEND_MESSAGE"
+import {AddPostActionType, ChangeNewTextActionType, profilePageReducer} from "./profilePage-reducer";
+import {messagesPageReducer, NewMessageTextActionType, SendMessageActionType} from "./messagesPage-reducer";
 
 
 let reRenderAll = () => {
@@ -19,24 +17,6 @@ export type ActionsTypes =
     | ChangeNewTextActionType
     | NewMessageTextActionType
     | SendMessageActionType
-
-type AddPostActionType = {
-    type: 'ADD-POST',
-    newPostText: string,
-}
-type ChangeNewTextActionType = {
-    type: 'UPDATE-NEW-POST-TEXT',
-    newText: string,
-}
-type NewMessageTextActionType = {
-    type: 'UPDATE_NEW_MESSAGE_TEXT',
-    text: string,
-}
-type SendMessageActionType = {
-    type: 'SEND_MESSAGE'
-
-}
-
 
 export let store: storeType = {
     _state: {
@@ -67,27 +47,9 @@ export let store: storeType = {
         reRenderAll = observer
     },
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            let newPost = {
-                id: 5,
-                message: store._state.profilePage.newPostText,
-                likesCounter: 0,
-            }
-            this._state.profilePage.post.push(newPost)
-            this._state.profilePage.newPostText = ''
-            reRenderAll()
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.newText
-            reRenderAll()
-        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
-            this._state.messagesPage.newMessageText = action.text
-            reRenderAll()
-        } else if (action.type === SEND_MESSAGE) {
-            let body = this._state.messagesPage.newMessageText
-            this._state.messagesPage.messages.push({id: 4, message: body})
-            this._state.messagesPage.newMessageText = ''
-            reRenderAll()
-        }
+        this._state.profilePage = profilePageReducer(this._state.profilePage, action)
+        this._state.messagesPage = messagesPageReducer(this._state.messagesPage, action)
+        reRenderAll()
     }
 }
 
@@ -113,46 +75,9 @@ export type profilePageType = {
     post: Array<postType>
     newPostText: string
 }
-
 export type stateType = {
     messagesPage: messagesPageType
     profilePage: profilePageType
 }
 
 type  subscribeType = () => void
-
-
-//Создает action creator для wall.tsx
-
-export const addPostActionCreater = (newPostText: string): AddPostActionType => {
-    return {
-        type: ADD_POST,
-        newPostText: newPostText
-    }
-}
-export const addNewPostHandlerActionCreater = (newText: string): ChangeNewTextActionType => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: newText
-    }
-}
-//Создает action creator для dialogs.tsx
-
-export const sendMessageCreater = (): SendMessageActionType => {
-    return {
-        type: SEND_MESSAGE
-    }
-}
-
-export const updateNewMessageTextCreater = (text: string): NewMessageTextActionType => {
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        text: text
-    }
-}
-
-
-
-
-
-

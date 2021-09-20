@@ -3,10 +3,9 @@ import classes from './Wall.module.css'
 import {MyPost} from "./MyPost/MyPost";
 import {
     ActionsTypes,
-    addNewPostHandlerActionCreater,
-    addPostActionCreater,
     profilePageType
 } from "../../../Redux/state";
+import {addNewPostHandlerActionCreater, addPostActionCreater} from '../../../Redux/profilePage-reducer';
 
 type WallPropsType = {
     profilePage: profilePageType
