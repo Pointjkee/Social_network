@@ -4,7 +4,7 @@ import {MyPost} from "./MyPost/MyPost";
 import {
     ActionsTypes,
     profilePageType
-} from "../../../Redux/state";
+} from "../../../Redux/store";
 import {addNewPostHandlerActionCreater, addPostActionCreater} from '../../../Redux/profilePage-reducer';
 
 type WallPropsType = {

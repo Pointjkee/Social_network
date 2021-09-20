@@ -1,7 +1,7 @@
 import React from 'react';
 import {Wall} from "./Wall/Wall";
 import {AvaD} from "./AvaD/AvaD";
-import {ActionsTypes, profilePageType} from '../../Redux/state';
+import {ActionsTypes, profilePageType} from '../../Redux/store';
 
 type ProfilePropsType = {
     profilePage: profilePageType

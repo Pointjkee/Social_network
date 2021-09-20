@@ -1,5 +1,5 @@
 import React from "react";
-import {postType} from "../../../../Redux/state";
+import {postType} from "../../../../Redux/store";
 import {Post} from "./Post/Post";
 
 type propsType = {

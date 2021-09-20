@@ -1,9 +1,9 @@
-import {AddPostActionType, ChangeNewTextActionType, profilePageReducer} from "./profilePage-reducer";
+import{AddPostActionType, ChangeNewTextActionType, profilePageReducer}from "./profilePage-reducer";
 import {messagesPageReducer, NewMessageTextActionType, SendMessageActionType} from "./messagesPage-reducer";
 
 
 let reRenderAll = () => {
-    console.log('state changed')
+console.log('state changed')
 }
 
 export type storeType = {
@@ -18,7 +18,7 @@ export type ActionsTypes =
     | NewMessageTextActionType
     | SendMessageActionType
 
-export let store: storeType = {
+/*export let store: storeType = {
     _state: {
         messagesPage: {
             dialogs: [
@@ -51,7 +51,7 @@ export let store: storeType = {
         this._state.messagesPage = messagesPageReducer(this._state.messagesPage, action)
         reRenderAll()
     }
-}
+}*/
 
 export type messagesType = {
     id: number,
