@@ -1,10 +1,5 @@
-import{AddPostActionType, ChangeNewTextActionType, profilePageReducer}from "./profilePage-reducer";
-import {messagesPageReducer, NewMessageTextActionType, SendMessageActionType} from "./messagesPage-reducer";
-
-
-let reRenderAll = () => {
-console.log('state changed')
-}
+import{AddPostActionType, ChangeNewTextActionType} from "./profilePage-reducer";
+import { NewMessageTextActionType, SendMessageActionType} from "./messagesPage-reducer";
 
 export type storeType = {
     _state: stateType,

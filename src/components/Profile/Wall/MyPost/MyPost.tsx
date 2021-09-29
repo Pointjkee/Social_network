@@ -9,7 +9,10 @@ type propsType = {
 export const MyPost = (props: propsType) => {
     return (
         <div>
-            {props.post.map((el: any) => <Post message={el.message} id={el.id} likesCounter={el.likesCounter}/>)}
+            {props.post.map((el: postType) =>
+                <Post message={el.message}
+                      id={el.id}
+                      likesCounter={el.likesCounter}/>)}
         </div>
     )
 }

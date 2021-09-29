@@ -1,30 +1,26 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
 import classes from './Wall.module.css'
 import {MyPost} from "./MyPost/MyPost";
-import {
-    ActionsTypes,
-    profilePageType
-} from "../../../Redux/store";
-import {addNewPostHandlerActionCreater, addPostActionCreater} from '../../../Redux/profilePage-reducer';
+import {profilePageType} from "../../../Redux/store";
 
 type WallPropsType = {
     profilePage: profilePageType
-    dispatch: (action: ActionsTypes) => void
+    updateNewPostText: (text: string) => void
+    addPost: () => void
 }
-
 export const Wall = (props: WallPropsType) => {
-    const addPost = () => {
-        props.dispatch(addPostActionCreater(props.profilePage.newPostText))
+    const onAddPost = () => {
+        props.addPost()
     }
     const addNewPostHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        props.dispatch(addNewPostHandlerActionCreater(e.currentTarget.value))
+        let text = e.currentTarget.value
+        props.updateNewPostText(text)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            props.dispatch(addPostActionCreater(props.profilePage.newPostText))
+            props.addPost()
         }
     }
-
     return (
         <div className={classes.wall}>
             <div className={classes.mainInput}>
@@ -40,7 +36,7 @@ export const Wall = (props: WallPropsType) => {
                            onKeyPress={onKeyPressHandler}
                     />
                     <input type="button" value="Publish"
-                           onClick={addPost}
+                           onClick={onAddPost}
                            className={classes.button}/>
                 </div>
             </div>

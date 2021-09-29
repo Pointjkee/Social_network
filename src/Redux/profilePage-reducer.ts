@@ -2,7 +2,6 @@ import {ActionsTypes, profilePageType} from "./store"
 
 const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
-
 export type AddPostActionType = {
     type: 'ADD-POST',
     newPostText: string,
@@ -11,7 +10,6 @@ export type ChangeNewTextActionType = {
     type: 'UPDATE-NEW-POST-TEXT',
     newText: string,
 }
-
 let initialState = {
     post: [
         {id: 1, message: 'Hi', likesCounter: 12},
@@ -34,10 +32,9 @@ export const profilePageReducer = (state: profilePageType = initialState, action
         case UPDATE_NEW_POST_TEXT:
             state.newPostText = action.newText
             break;
-      }
+    }
     return state
 }
-
 //action creator для wall.tsx
 
 export const addPostActionCreater = (newPostText: string): AddPostActionType => {
