@@ -9,8 +9,9 @@ type WallPropsType = {
     addPost: () => void
 }
 export const Wall = (props: WallPropsType) => {
+
     const onAddPost = () => {
-        props.addPost()
+             props.addPost()
     }
     const addNewPostHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let text = e.currentTarget.value

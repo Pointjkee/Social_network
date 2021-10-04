@@ -4,7 +4,7 @@ const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 export type AddPostActionType = {
     type: 'ADD-POST',
-    newPostText: string,
+    // newPostText: string,
 }
 export type ChangeNewTextActionType = {
     type: 'UPDATE-NEW-POST-TEXT',
@@ -18,31 +18,42 @@ let initialState = {
     newPostText: 'IT-incubator'
 }
 
-export const profilePageReducer = (state: profilePageType = initialState, action: ActionsTypes) => {
+export const profilePageReducer = (state: profilePageType = initialState, action: AddPostActionType | ChangeNewTextActionType) => {
     switch (action.type) {
-        case ADD_POST:
+        case ADD_POST: {
             let newPost = {
                 id: 5,
                 message: state.newPostText,
                 likesCounter: 0,
             }
-            state.post.push(newPost)
-            state.newPostText = ''
-            break;
-        case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText
-            break;
+            let stateCopy = {...state}
+            stateCopy.post = [...state.post]
+            stateCopy.post.push(newPost)
+            stateCopy.newPostText = ''
+            return stateCopy
+        }
+        case UPDATE_NEW_POST_TEXT: {
+            let stateCopy = {...state}
+            stateCopy.newPostText = action.newText
+            return stateCopy
+        }
     }
     return state
 }
 //action creator для wall.tsx
 
-export const addPostActionCreater = (newPostText: string): AddPostActionType => {
+export const addPostActionCreater = (): AddPostActionType => {
     return {
-        type: ADD_POST,
-        newPostText: newPostText
+        type: ADD_POST
     }
 }
+// export const addPostActionCreater = (newPostText: string): AddPostActionType => {
+//     return {
+//         type: ADD_POST,
+//         newPostText: newPostText
+//     }
+// }
+
 export const addNewPostHandlerActionCreater = (newText: string): ChangeNewTextActionType => {
     return {
         type: UPDATE_NEW_POST_TEXT,

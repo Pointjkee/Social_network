@@ -2,19 +2,17 @@ import React, {ChangeEvent} from 'react';
 import d from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from './Messages/Message';
-import {dialogsType, messagesType} from "../../Redux/store";
+import {messagesPageType} from "../../Redux/store";
 
 type DialogsPropsType = {
     onNewMessageChange: (text: string) => void
     sendMessageClick: () => void
-    dialogs:Array<dialogsType>
-    messages:Array<messagesType>
-    newMessageText:string
+    messagesPage: messagesPageType
 }
 export const Dialogs = (props: DialogsPropsType) => {
     const onNewMessageChange = (e: ChangeEvent<HTMLInputElement>) => {
         let text = e.currentTarget.value
-            props.onNewMessageChange(text)
+        props.onNewMessageChange(text)
     }
     const sendMessageClick = () => {
         props.sendMessageClick()
@@ -22,15 +20,15 @@ export const Dialogs = (props: DialogsPropsType) => {
     return (
         <div className={d.dialogs}>
             <div className={d.dialogsItems}>
-                {props.dialogs.map(el => <DialogItem name={el.name} id={el.id}/>)}
+                {props.messagesPage.dialogs.map(el => <DialogItem name={el.name} id={el.id}/>)}
             </div>
             <div className={d.messages}>
                 <div>
-                    {props.messages.map(el => <Message message={el.message} id={el.id}/>)}
+                    {props.messagesPage.messages.map(el => <Message message={el.message} id={el.id}/>)}
                 </div>
                 <div>
                     <input size={40}
-                           value={props.newMessageText}
+                           value={props.messagesPage.newMessageText}
                            onChange={onNewMessageChange}/>
                 </div>
                 <div>

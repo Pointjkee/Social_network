@@ -9,27 +9,17 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import {News} from './components/News/News';
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {stateType, storeType} from "./Redux/store";
-import { DialogsContainer } from './components/Dialogs/DialogsContainer';
+import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 
-
-type AppPropsType = {
-    state: stateType
-    dispatch: (action: any) => void
-    store: storeType
-}
-
-function App(props: AppPropsType) {
+function App() {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/dialogs' render={() => <DialogsContainer store={props.store}/>}/>
-                    <Route path='/profile' render={() => <Profile store={props.store}
-
-                    />}/>
+                    <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                    <Route path='/profile' render={() => <Profile/>}/>
                     <Route path='/News' render={() => <News/>}/>
                     <Route path='/Music' render={() => <Music/>}/>
                     <Route path='/Settings' render={() => <Settings/>}/>
@@ -38,7 +28,6 @@ function App(props: AppPropsType) {
             </div>
         </BrowserRouter>
     );
-
 }
 
 

@@ -1,6 +1,8 @@
 import{AddPostActionType, ChangeNewTextActionType} from "./profilePage-reducer";
 import { NewMessageTextActionType, SendMessageActionType} from "./messagesPage-reducer";
 
+type  subscribeType = () => void
+
 export type storeType = {
     _state: stateType,
     getState: () => stateType,
@@ -75,4 +77,3 @@ export type stateType = {
     profilePage: profilePageType
 }
 
-type  subscribeType = () => void

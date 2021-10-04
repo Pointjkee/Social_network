@@ -1,23 +1,29 @@
 import React from 'react';
-import {storeType} from "../../../Redux/store";
+import {profilePageType} from "../../../Redux/store";
 import {addNewPostHandlerActionCreater, addPostActionCreater} from '../../../Redux/profilePage-reducer';
 import {Wall} from "./Wall";
+import {connect} from "react-redux";
+import {AppStateType} from "../../../Redux/storeRedux";
+import {Dispatch} from "redux";
 
-type WallContainerPropsType = {
-    store: storeType
+type MapStateToPropsType = {
+    profilePage: profilePageType
 }
-export const WallContainer = (props: WallContainerPropsType) => {
-    const addPost = () => {
-        props.store.dispatch(addPostActionCreater(props.store.getState().profilePage.newPostText))
+
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        profilePage: state.profilePage
     }
-    const addNewPostHandler = (text: string) => {
-        props.store.dispatch(addNewPostHandlerActionCreater(text))
-    }
-    return (
-        <Wall
-            profilePage={props.store.getState().profilePage}
-            updateNewPostText={addNewPostHandler}
-            addPost={addPost}
-        />
-    )
 }
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        updateNewPostText: (text: string) => {
+            dispatch(addNewPostHandlerActionCreater(text))
+        },
+        addPost: () => {
+            dispatch(addPostActionCreater())
+        }
+    }
+}
+
+export const WallContainer = connect(mapStateToProps, mapDispatchToProps)(Wall)

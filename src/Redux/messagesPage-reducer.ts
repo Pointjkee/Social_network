@@ -26,14 +26,19 @@ let initialState = {
 
 export const messagesPageReducer = (state: messagesPageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessageText = action.text
-            break;
-        case SEND_MESSAGE:
+        case UPDATE_NEW_MESSAGE_TEXT: {
+            let stateCopy = {...state}
+            stateCopy.newMessageText = action.text
+            return stateCopy
+        }
+        case SEND_MESSAGE: {
             let body = state.newMessageText
-            state.messages.push({id: 4, message: body})
-            state.newMessageText = ''
-            break;
+            let stateCopy = {...state}
+            stateCopy.messages = [...state.messages]
+            stateCopy.messages.push({id: 4, message: body})
+            stateCopy.newMessageText = ''
+            return stateCopy;
+        }
           }
     return state
 }
