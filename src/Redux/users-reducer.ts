@@ -20,7 +20,7 @@ export type usersType = Array<{
     id: number,
     photoUrl: string,
     followed: boolean,
-    fullName: string,
+    name: string,
     status: string,
     location: { city: string, country: string }
 }>
@@ -30,32 +30,7 @@ type initialStateType = {
 }
 
 let initialState = {
-    users: [
-        {
-            id: 1,
-            photoUrl: 'https://pbs.twimg.com/profile_images/1222646977332174849/xWcD6t_Q.jpg',
-            followed: true,
-            fullName: 'Denis',
-            status: 'Im learning',
-            location: {city: "Minsk", country: 'Belarus'}
-        },
-        {
-            id: 2,
-            photoUrl: 'https://pbs.twimg.com/profile_images/1222646977332174849/xWcD6t_Q.jpg',
-            followed: false,
-            fullName: 'GLeb',
-            status: 'Im learning too',
-            location: {city: "Ostrovec", country: 'Belarus'}
-        },
-        {
-            id: 3,
-            photoUrl: 'https://pbs.twimg.com/profile_images/1222646977332174849/xWcD6t_Q.jpg',
-            followed: false,
-            fullName: 'Alex',
-            status: 'Im working',
-            location: {city: "Grodno", country: 'Belarus'}
-        }
-    ],
+    users: [],
 }
 
 export const usersReducer = (state: initialStateType = initialState, action: ActionsTypes) => {
@@ -89,4 +64,5 @@ export const usersReducer = (state: initialStateType = initialState, action: Act
 export const followAC = (userID: number) => ({type: FOLLOW, userID})
 export const unFollowAC = (userID: number) => ({type: UNFOLLOW, userID})
 export const setUsersAC = (users: usersType) => ({type: SET_USERS, users})
+
 
