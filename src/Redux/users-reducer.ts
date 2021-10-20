@@ -3,6 +3,7 @@ const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
 export type followACType = {
     type: "FOLLOW",
@@ -24,7 +25,11 @@ export type setTotalUsersCountAC = {
     type: 'SET_TOTAL_USERS_COUNT',
     totalCount: number
 }
-type ActionsTypes = followACType | unFollowAC | usersAC | currentPageAC | setTotalUsersCountAC
+export type setIsFetching = {
+    type: 'TOGGLE_IS_FETCHING',
+    isFetching:boolean
+}
+type ActionsTypes = followACType | unFollowAC | usersAC | currentPageAC | setTotalUsersCountAC | setIsFetching
 
 export type usersType = Array<{
     id: number,
@@ -32,21 +37,23 @@ export type usersType = Array<{
     followed: boolean,
     name: string,
     status: string,
-    location: { city: string, country: string }
+    location: { city: string, country: string },
 }>
 
 type initialStateType = {
     users: usersType
     pageSize: number,
     totalUsersCount: number,
-    currentPage: number
+    currentPage: number,
+    isFetching:boolean,
 }
 
 let initialState = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isFetching:true,
 }
 
 export const usersReducer = (state: initialStateType = initialState, action: ActionsTypes) => {
@@ -77,6 +84,9 @@ export const usersReducer = (state: initialStateType = initialState, action: Act
         case SET_TOTAL_USERS_COUNT: {
             return {...state, totalUsersCount: action.totalCount}
         }
+        case TOGGLE_IS_FETCHING: {
+            return {...state, isFetching:action.isFetching}
+        }
     }
     return state
 }
@@ -88,5 +98,6 @@ export const unFollowAC = (userID: number) => ({type: UNFOLLOW, userID})
 export const setUsersAC = (users: usersType) => ({type: SET_USERS, users})
 export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage})
 export const setTotalUsersCountAC = (totalCount: number) => ({type: SET_TOTAL_USERS_COUNT, totalCount})
+export const setIsFetchingAC = (isFetching:boolean) => ({type: TOGGLE_IS_FETCHING, isFetching})
 
 
