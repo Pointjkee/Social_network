@@ -4,6 +4,7 @@ import {messagesPageReducer} from "./messagesPage-reducer";
 import {usersReducer} from "./users-reducer";
 
 
+
 let reducers = combineReducers({
     profilePage: profilePageReducer,
     messagesPage: messagesPageReducer,
@@ -12,6 +13,9 @@ let reducers = combineReducers({
 export type AppStateType = ReturnType<typeof reducers>
 
 let store = createStore(reducers)
+
+//@ts-ignore
+window.store = store
 
 
 export default store

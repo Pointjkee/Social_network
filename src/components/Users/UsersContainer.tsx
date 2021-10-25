@@ -1,6 +1,5 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../Redux/storeRedux";
-import {Dispatch} from "redux";
 import {
     follow,
     setCurrentPage,
@@ -13,7 +12,6 @@ import {
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
-
 const {default: axios} = require('axios');
 
 
@@ -36,7 +34,7 @@ type UsersResponseType = {
     error: string,
 }
 
-class UsersContainerComponent extends React.Component<usersPropsType> {
+class UsersContainer extends React.Component<usersPropsType> {
     componentDidMount() {
         this.props.setIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)                     //ajax-запрос
@@ -83,19 +81,8 @@ const mapStateToProps = (state: AppStateType) => {
         isFetching: state.usersPage.isFetching
     }
 }
-// const mapDispatchToProps = (dispatch: Dispatch) => {
-//     return {
-//         follow,
-//         unFollow,
-//         setUsers,
-//         setCurrentPage,
-//         setTotalUsersCount,
-//         setIsFetching
-//         }
-// }
 
-
-export const UsersContainer = connect(mapStateToProps,
+export default connect(mapStateToProps,
     {
     follow,
     unFollow,
@@ -104,4 +91,4 @@ export const UsersContainer = connect(mapStateToProps,
     setTotalUsersCount,
     setIsFetching
 }
-)(UsersContainerComponent)
+)(UsersContainer)

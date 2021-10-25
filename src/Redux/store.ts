@@ -68,9 +68,30 @@ export type messagesPageType = {
     messages: Array<messagesType>
     newMessageText: string
 }
+export type profileType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
+    photos: {
+        small: string
+        large: string
+    }
+}
 export type profilePageType = {
     post: Array<postType>
     newPostText: string
+    profile: profileType | null
 }
 export type stateType = {
     messagesPage: messagesPageType

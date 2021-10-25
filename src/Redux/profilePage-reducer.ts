@@ -1,7 +1,9 @@
-import {ActionsTypes, profilePageType} from "./store"
+import {profilePageType, profileType} from "./store"
 
 const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
+const SET_USER_PROFILE = "SET_USER_PROFILE"
+
 export type AddPostActionType = {
     type: 'ADD-POST',
     // newPostText: string,
@@ -10,15 +12,21 @@ export type ChangeNewTextActionType = {
     type: 'UPDATE-NEW-POST-TEXT',
     newText: string,
 }
-let initialState = {
+export type SetUserProfileType = {
+    type: "SET_USER_PROFILE",
+    profile: profileType | null
+}
+const initialState = {
     post: [
         {id: 1, message: 'Hi', likesCounter: 12},
         {id: 2, message: 'How are u?', likesCounter: 6},
     ],
-    newPostText: 'IT-incubator'
+    newPostText: 'IT-incubator',
+    profile: null
 }
+type ActionsType = AddPostActionType | ChangeNewTextActionType | SetUserProfileType
 
-export const profilePageReducer = (state: profilePageType = initialState, action: AddPostActionType | ChangeNewTextActionType) => {
+export const profilePageReducer = (state: profilePageType = initialState, action: ActionsType) => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
@@ -37,6 +45,9 @@ export const profilePageReducer = (state: profilePageType = initialState, action
             stateCopy.newPostText = action.newText
             return stateCopy
         }
+        case SET_USER_PROFILE: {
+            return {...state, profile:action.profile}
+        }
     }
     return state
 }
@@ -47,16 +58,16 @@ export const addPost = (): AddPostActionType => {
         type: ADD_POST
     }
 }
-// export const addPostActionCreater = (newPostText: string): AddPostActionType => {
-//     return {
-//         type: ADD_POST,
-//         newPostText: newPostText
-//     }
-// }
 
 export const updateNewPostText = (newText: string): ChangeNewTextActionType => {
     return {
         type: UPDATE_NEW_POST_TEXT,
-        newText: newText
+        newText
+    }
+}
+export const setUserProfile = (profile: any): SetUserProfileType => {
+    return {
+        type: SET_USER_PROFILE,
+        profile
     }
 }
