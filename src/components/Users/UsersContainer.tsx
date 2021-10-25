@@ -12,6 +12,7 @@ import {
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
+
 const {default: axios} = require('axios');
 
 
@@ -27,18 +28,22 @@ type usersPropsType = {
     setTotalUsersCount: (totalCount: number) => void,
     isFetching: boolean,
     setIsFetching: (isFetching: boolean) => void,
+
 }
 type UsersResponseType = {
-    items: Array<usersType>,
-    totalCount: number,
-    error: string,
+    data: {
+        items: Array<usersType>,
+        totalCount: number,
+        error: string,
+    }
 }
 
 class UsersContainer extends React.Component<usersPropsType> {
     componentDidMount() {
+
         this.props.setIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)                     //ajax-запрос
-            .then((response:any) => {
+            .then((response: any) => {
                 this.props.setIsFetching(false)
                 this.props.setUsers(response.data.items)
                 this.props.setTotalUsersCount(response.data.totalCount)
@@ -84,11 +89,11 @@ const mapStateToProps = (state: AppStateType) => {
 
 export default connect(mapStateToProps,
     {
-    follow,
-    unFollow,
-    setUsers,
-    setCurrentPage,
-    setTotalUsersCount,
-    setIsFetching
-}
+        follow,
+        unFollow,
+        setUsers,
+        setCurrentPage,
+        setTotalUsersCount,
+        setIsFetching
+    }
 )(UsersContainer)
