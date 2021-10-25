@@ -45,12 +45,12 @@ export const messagesPageReducer = (state: messagesPageType = initialState, acti
 
 //action creator для dialogs.tsx
 
-export const sendMessageCreater = (): SendMessageActionType => {
+export const sendMessageClick = (): SendMessageActionType => {
     return {
         type: SEND_MESSAGE
     }
 }
-export const updateNewMessageTextCreater = (text: string): NewMessageTextActionType => {
+export const onNewMessageChange = (text: string): NewMessageTextActionType => {
     return {
         type: UPDATE_NEW_MESSAGE_TEXT,
         text: text

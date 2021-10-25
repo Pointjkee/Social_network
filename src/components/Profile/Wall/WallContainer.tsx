@@ -1,6 +1,6 @@
 import React from 'react';
 import {profilePageType} from "../../../Redux/store";
-import {addNewPostHandlerActionCreater, addPostActionCreater} from '../../../Redux/profilePage-reducer';
+import {updateNewPostText, addPost} from '../../../Redux/profilePage-reducer';
 import {Wall} from "./Wall";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../Redux/storeRedux";
@@ -15,15 +15,11 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         profilePage: state.profilePage
     }
 }
-const mapDispatchToProps = (dispatch: Dispatch) => {
+/*const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        updateNewPostText: (text: string) => {
-            dispatch(addNewPostHandlerActionCreater(text))
-        },
-        addPost: () => {
-            dispatch(addPostActionCreater())
-        }
+        updateNewPostText,
+        addPost
     }
-}
+}*/
 
-export const WallContainer = connect(mapStateToProps, mapDispatchToProps)(Wall)
+export const WallContainer = connect(mapStateToProps, {updateNewPostText,addPost})(Wall)

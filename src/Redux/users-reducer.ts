@@ -93,11 +93,11 @@ export const usersReducer = (state: initialStateType = initialState, action: Act
 
 //action creator для dialogs.tsx
 
-export const followAC = (userID: number) => ({type: FOLLOW, userID})
-export const unFollowAC = (userID: number) => ({type: UNFOLLOW, userID})
-export const setUsersAC = (users: usersType) => ({type: SET_USERS, users})
-export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage})
-export const setTotalUsersCountAC = (totalCount: number) => ({type: SET_TOTAL_USERS_COUNT, totalCount})
-export const setIsFetchingAC = (isFetching:boolean) => ({type: TOGGLE_IS_FETCHING, isFetching})
+export const follow = (userID: number) => ({type: FOLLOW, userID})
+export const unFollow = (userID: number) => ({type: UNFOLLOW, userID})
+export const setUsers = (users: usersType) => ({type: SET_USERS, users})
+export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage})
+export const setTotalUsersCount = (totalCount: number) => ({type: SET_TOTAL_USERS_COUNT, totalCount})
+export const setIsFetching = (isFetching:boolean) => ({type: TOGGLE_IS_FETCHING, isFetching})
 
 

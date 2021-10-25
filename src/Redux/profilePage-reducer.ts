@@ -42,7 +42,7 @@ export const profilePageReducer = (state: profilePageType = initialState, action
 }
 //action creator для wall.tsx
 
-export const addPostActionCreater = (): AddPostActionType => {
+export const addPost = (): AddPostActionType => {
     return {
         type: ADD_POST
     }
@@ -54,7 +54,7 @@ export const addPostActionCreater = (): AddPostActionType => {
 //     }
 // }
 
-export const addNewPostHandlerActionCreater = (newText: string): ChangeNewTextActionType => {
+export const updateNewPostText = (newText: string): ChangeNewTextActionType => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText: newText
