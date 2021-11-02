@@ -32,18 +32,17 @@ type usersPropsType = {
 }
 type UsersResponseType = {
     data: {
-        items: Array<usersType>,
+        error: string | null,
+        items: usersType,
         totalCount: number,
-        error: string,
     }
 }
-
 class UsersContainer extends React.Component<usersPropsType> {
     componentDidMount() {
-
         this.props.setIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)                     //ajax-запрос
-            .then((response: any) => {
+            .then((response: UsersResponseType) => {
+                debugger
                 this.props.setIsFetching(false)
                 this.props.setUsers(response.data.items)
                 this.props.setTotalUsersCount(response.data.totalCount)

@@ -20,7 +20,7 @@ type ProfilePropsType = RouteComponentProps<PathParamsType> & {
     newPostText?: string,
     addPost: () => void,
     updateNewPostText: (newText: string) => void,
-    setUserProfile: (profile: any) => void,
+    setUserProfile: (profile: profileType) => void,
     profile: profileType | null,
     match: {
         params: {
@@ -45,7 +45,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 
     render() {
         return (
-            <Profile {...this.props} profile={this.props.profile}/>
+            <Profile {...this.props} profile={this.props.profile} />
         )
     }
 }

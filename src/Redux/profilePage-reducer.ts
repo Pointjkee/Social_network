@@ -51,7 +51,6 @@ export const profilePageReducer = (state: profilePageType = initialState, action
     }
     return state
 }
-//action creator для wall.tsx
 
 export const addPost = (): AddPostActionType => {
     return {
@@ -65,9 +64,10 @@ export const updateNewPostText = (newText: string): ChangeNewTextActionType => {
         newText
     }
 }
-export const setUserProfile = (profile: any): SetUserProfileType => {
+export const setUserProfile = (profile: profileType): SetUserProfileType => {
     return {
         type: SET_USER_PROFILE,
         profile
     }
+
 }
