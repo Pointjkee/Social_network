@@ -58,21 +58,17 @@ let initialState = {
 
 export const usersReducer = (state: initialStateType = initialState, action: ActionsTypes) => {
     switch (action.type) {
+
         case FOLLOW:
-            return {
-                ...state, users: state.users
-                    .map(u => u.id === action.userID ? {...u, followed: false} : u)
-                /* .map(u => {
-                     if (u.id === action.userID){
-                         return {...u, followed:true}
-                     }
-                     return u
-                 }*/
-            }
-        case UNFOLLOW: {
+
             return {
                 ...state, users: state.users
                     .map(u => u.id === action.userID ? {...u, followed: true} : u)
+                           }
+        case UNFOLLOW: {
+            return {
+                ...state, users: state.users
+                    .map(u => u.id === action.userID ? {...u, followed: false} : u)
             }
         }
         case SET_USERS: {

@@ -3,6 +3,7 @@ import styles from "./Users.module.css";
 import userPhoto from "../../Files/img/user.png";
 import {usersType} from "../../Redux/users-reducer";
 import {NavLink} from "react-router-dom";
+const {default: axios} = require('axios');
 
 type usersTypeProps = {
     totalUsersCount: number,
@@ -13,7 +14,13 @@ type usersTypeProps = {
     unFollow: (userID: number) => void,
     onPageChanged: (currentPage: number) => void
 }
-
+type responseType = {
+    data: {
+        data: {}
+        messages: string[],
+        resultCode: number,
+    }
+}
 
 export const Users = (props: usersTypeProps) => {
 
@@ -22,6 +29,7 @@ export const Users = (props: usersTypeProps) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
+
     return (
         <div style={{color: 'black'}}>
             <div>
@@ -38,12 +46,31 @@ export const Users = (props: usersTypeProps) => {
             {
                 props.users.map(u => {
                     const followHandler = () => {
-                        props.follow(u.id)
-                    }
+                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                            withCredentials: true,
+                            headers: {
+                                'API-KEY': '1f886700-a829-4416-bf51-a1d8fa58d064'
+                            }
+                        })                     //ajax-запрос
+                            .then((response: responseType) => {
+                                if (response.data.resultCode === 0) {
+                                    props.follow(u.id)
+                                }
+                            })
+                        }
                     const unFollowHandler = () => {
-                        props.unFollow(u.id)
+                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                            withCredentials: true,
+                            headers: {
+                                'API-KEY': '1f886700-a829-4416-bf51-a1d8fa58d064'
+                            }
+                        })                     //ajax-запрос
+                            .then((response: responseType) => {
+                                if (response.data.resultCode === 0) {
+                                    props.unFollow(u.id)
+                                }
+                            })
                     }
-
                     return <div key={u.id}>
                 <span>
                     <div>
@@ -54,8 +81,8 @@ export const Users = (props: usersTypeProps) => {
                     <div>
                         {
                             u.followed
-                                ? <button onClick={followHandler}>Follow</button>
-                                : <button onClick={unFollowHandler}>Unfollow</button>
+                                ? <button onClick={unFollowHandler}>Unfollow</button>
+                                : <button onClick={followHandler}>Follow</button>
                         }
 
                     </div>

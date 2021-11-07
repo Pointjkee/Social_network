@@ -1,9 +1,10 @@
-import axios from 'axios';
 import React from 'react';
 import {Header} from "./Header";
 import {connect} from "react-redux";
 import {setAuthUserData} from "../../Redux/auth-reducer";
 import {AppStateType} from "../../Redux/storeRedux";
+
+const {default: axios} = require('axios');
 
 
 type responseType = {
@@ -20,7 +21,7 @@ type responseType = {
 type HeaderPropsType = {
     setAuthUserData: (userId: number, email: string, login: string) => void,
     isAuth: boolean,
-    login: string  | null,
+    login: string | null,
 }
 
 class HeaderContainer extends React.Component<HeaderPropsType> {
@@ -41,11 +42,12 @@ class HeaderContainer extends React.Component<HeaderPropsType> {
 
     }
 }
+
 type mapStateTopropsType = {
     isAuth: boolean,
-    login: string  | null,
+    login: string | null,
 }
-const mapStateToprops = (state: AppStateType):mapStateTopropsType => ({
+const mapStateToprops = (state: AppStateType): mapStateTopropsType => ({
     isAuth: state.auth.isAuth,
     login: state.auth.login,
 })
