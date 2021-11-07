@@ -12,7 +12,7 @@ import {
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
-import { withRouter } from "react-router-dom";
+import {usersAPI} from "../../API/api";
 
 const {default: axios} = require('axios');
 
@@ -31,43 +31,35 @@ type usersPropsType = {
     setIsFetching: (isFetching: boolean) => void,
 
 }
-type UsersResponseType = {
-    data: {
-        error: string | null,
-        items: usersType,
-        totalCount: number,
-    }
+type dataType = {
+    error: string | null,
+    items: usersType,
+    totalCount: number,
 }
 
 class UsersContainer extends React.Component<usersPropsType> {
     componentDidMount() {
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-            withCredentials: true,
-        })                     //ajax-запрос
-            .then((response: UsersResponseType) => {
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then((data: dataType) => {
                 this.props.setIsFetching(false)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalUsersCount(response.data.totalCount)
+                this.props.setUsers(data.items)
+                this.props.setTotalUsersCount(data.totalCount)
             })
     }
 
     onPageChanged = (currentPage: number) => {
         this.props.setIsFetching(true)
         this.props.setCurrentPage(currentPage)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`, {
-            withCredentials: true,
-        })                     //ajax-запрос
-
-            .then((response: UsersResponseType) => {
+        usersAPI.getUsers(currentPage, this.props.pageSize)
+            .then((data: dataType) => {
                 this.props.setIsFetching(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(data.items)
             })
-
     }
 
     render() {
-         return <>
+        return <>
             {this.props.isFetching ? <Preloader/> : null}
             <Users
                 totalUsersCount={this.props.totalUsersCount}
@@ -91,7 +83,6 @@ const mapStateToProps = (state: AppStateType) => {
         isFetching: state.usersPage.isFetching
     }
 }
-
 
 export default connect(mapStateToProps,
     {

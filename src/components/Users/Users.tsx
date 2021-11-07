@@ -3,6 +3,8 @@ import styles from "./Users.module.css";
 import userPhoto from "../../Files/img/user.png";
 import {usersType} from "../../Redux/users-reducer";
 import {NavLink} from "react-router-dom";
+import {followAPI} from "../../API/api";
+
 const {default: axios} = require('axios');
 
 type usersTypeProps = {
@@ -21,6 +23,7 @@ type responseType = {
         resultCode: number,
     }
 }
+
 
 export const Users = (props: usersTypeProps) => {
 
@@ -46,30 +49,18 @@ export const Users = (props: usersTypeProps) => {
             {
                 props.users.map(u => {
                     const followHandler = () => {
-                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
-                            withCredentials: true,
-                            headers: {
-                                'API-KEY': '1f886700-a829-4416-bf51-a1d8fa58d064'
+                        followAPI.followHandler(u.id).then((resultCode: number) => {
+                            if (resultCode === 0) {
+                                props.follow(u.id)
                             }
-                        })                     //ajax-запрос
-                            .then((response: responseType) => {
-                                if (response.data.resultCode === 0) {
-                                    props.follow(u.id)
-                                }
-                            })
-                        }
+                        })
+                    }
                     const unFollowHandler = () => {
-                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                            withCredentials: true,
-                            headers: {
-                                'API-KEY': '1f886700-a829-4416-bf51-a1d8fa58d064'
+                        followAPI.unFollowHander(u.id).then((resultCode: number) => {
+                            if (resultCode === 0) {
+                                props.unFollow(u.id)
                             }
-                        })                     //ajax-запрос
-                            .then((response: responseType) => {
-                                if (response.data.resultCode === 0) {
-                                    props.unFollow(u.id)
-                                }
-                            })
+                        })
                     }
                     return <div key={u.id}>
                 <span>
