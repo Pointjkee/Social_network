@@ -5,8 +5,6 @@ import {usersType} from "../../Redux/users-reducer";
 import {NavLink} from "react-router-dom";
 import {followAPI} from "../../API/api";
 
-const {default: axios} = require('axios');
-
 type usersTypeProps = {
     totalUsersCount: number,
     pageSize: number
@@ -15,14 +13,16 @@ type usersTypeProps = {
     follow: (userID: number) => void,
     unFollow: (userID: number) => void,
     onPageChanged: (currentPage: number) => void
+    setFollowingInProgress: (followingInProgress: boolean, userID: number) => void,
+    followingInProgress: (boolean|number)[]
 }
-type responseType = {
+/*type responseType = {
     data: {
         data: {}
         messages: string[],
         resultCode: number,
     }
-}
+}*/
 
 
 export const Users = (props: usersTypeProps) => {
@@ -49,17 +49,21 @@ export const Users = (props: usersTypeProps) => {
             {
                 props.users.map(u => {
                     const followHandler = () => {
+                        props.setFollowingInProgress(true, u.id)
                         followAPI.followHandler(u.id).then((resultCode: number) => {
                             if (resultCode === 0) {
                                 props.follow(u.id)
                             }
+                            props.setFollowingInProgress(false, u.id)
                         })
                     }
                     const unFollowHandler = () => {
+                        props.setFollowingInProgress(true, u.id)
                         followAPI.unFollowHander(u.id).then((resultCode: number) => {
                             if (resultCode === 0) {
                                 props.unFollow(u.id)
                             }
+                            props.setFollowingInProgress(false, u.id)
                         })
                     }
                     return <div key={u.id}>
@@ -72,8 +76,9 @@ export const Users = (props: usersTypeProps) => {
                     <div>
                         {
                             u.followed
-                                ? <button onClick={unFollowHandler}>Unfollow</button>
-                                : <button onClick={followHandler}>Follow</button>
+                                ?
+                                <button onClick={unFollowHandler} disabled={props.followingInProgress.some(id => id === u.id)}>Unfollow</button>
+                                : <button onClick={followHandler} disabled={props.followingInProgress.some(id => id === u.id)}>Follow</button>
                         }
 
                     </div>
