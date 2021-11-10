@@ -1,3 +1,5 @@
+import {followAPI, usersAPI} from "../API/api";
+
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = 'SET_USERS'
@@ -101,8 +103,6 @@ export const usersReducer = (state: initialStateType = initialState, action: Act
     return state
 }
 
-//action creator для dialogs.tsx
-
 export const follow = (userID: number) => ({type: FOLLOW, userID})
 export const unFollow = (userID: number) => ({type: UNFOLLOW, userID})
 export const setUsers = (users: usersType) => ({type: SET_USERS, users})
@@ -115,4 +115,47 @@ export const setFollowingInProgress = (followingInProgress: boolean, userID: num
     userID
 })
 
+type dataType = {
+    error: string | null,
+    items: usersType,
+    totalCount: number,
+}
 
+// type dispatchType = (   (isFetching: boolean) => void ) => void
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+    return (dispatch: any) => {
+        dispatch(setIsFetching(true))
+        usersAPI.getUsers(currentPage, pageSize)
+            .then((data: dataType) => {
+                dispatch(setCurrentPage(currentPage))
+                dispatch(setIsFetching(false))
+                dispatch(setUsers(data.items))
+                dispatch(setTotalUsersCount(data.totalCount))
+            })
+    }
+}
+export const followThunkCreator = (userID: number) => {
+    return (dispatch: any) => {
+        dispatch(setFollowingInProgress(true, userID))
+        followAPI.followHandler(userID)
+            .then((resultCode: number) => {
+                if (resultCode === 0) {
+                    dispatch(follow(userID))
+                }
+                dispatch(setFollowingInProgress(false, userID))
+            })
+    }
+}
+export const unFollowThunkCreator = (userID: number) => {
+    return (dispatch: any) => {
+        dispatch(setFollowingInProgress(true, userID))
+        followAPI.unFollowHander(userID)
+            .then((resultCode: number) => {
+                if (resultCode === 0) {
+                    dispatch(unFollow(userID))
+                }
+                dispatch(setFollowingInProgress(false, userID))
+            })
+    }
+}

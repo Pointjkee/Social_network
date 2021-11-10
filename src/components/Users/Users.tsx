@@ -3,27 +3,18 @@ import styles from "./Users.module.css";
 import userPhoto from "../../Files/img/user.png";
 import {usersType} from "../../Redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import {followAPI} from "../../API/api";
 
 type usersTypeProps = {
     totalUsersCount: number,
     pageSize: number
     currentPage: number,
     users: usersType,
-    follow: (userID: number) => void,
-    unFollow: (userID: number) => void,
     onPageChanged: (currentPage: number) => void
     setFollowingInProgress: (followingInProgress: boolean, userID: number) => void,
-    followingInProgress: (boolean|number)[]
+    followingInProgress: (boolean | number)[],
+    unFollowThunkCreator: any,
+    followThunkCreator: any
 }
-/*type responseType = {
-    data: {
-        data: {}
-        messages: string[],
-        resultCode: number,
-    }
-}*/
-
 
 export const Users = (props: usersTypeProps) => {
 
@@ -49,22 +40,10 @@ export const Users = (props: usersTypeProps) => {
             {
                 props.users.map(u => {
                     const followHandler = () => {
-                        props.setFollowingInProgress(true, u.id)
-                        followAPI.followHandler(u.id).then((resultCode: number) => {
-                            if (resultCode === 0) {
-                                props.follow(u.id)
-                            }
-                            props.setFollowingInProgress(false, u.id)
-                        })
+                        props.followThunkCreator(u.id)
                     }
                     const unFollowHandler = () => {
-                        props.setFollowingInProgress(true, u.id)
-                        followAPI.unFollowHander(u.id).then((resultCode: number) => {
-                            if (resultCode === 0) {
-                                props.unFollow(u.id)
-                            }
-                            props.setFollowingInProgress(false, u.id)
-                        })
+                        props.unFollowThunkCreator(u.id)
                     }
                     return <div key={u.id}>
                 <span>
@@ -77,8 +56,10 @@ export const Users = (props: usersTypeProps) => {
                         {
                             u.followed
                                 ?
-                                <button onClick={unFollowHandler} disabled={props.followingInProgress.some(id => id === u.id)}>Unfollow</button>
-                                : <button onClick={followHandler} disabled={props.followingInProgress.some(id => id === u.id)}>Follow</button>
+                                <button onClick={unFollowHandler}
+                                        disabled={props.followingInProgress.some(id => id === u.id)}>Unfollow</button>
+                                : <button onClick={followHandler}
+                                          disabled={props.followingInProgress.some(id => id === u.id)}>Follow</button>
                         }
 
                     </div>
