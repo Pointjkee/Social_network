@@ -14,8 +14,6 @@ import {Preloader} from "../Common/Preloader/Preloader";
 
 type usersPropsType = {
     users: usersType,
-    follow: (userID: number) => void,
-    unFollow: (userID: number) => void,
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,

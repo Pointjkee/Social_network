@@ -137,6 +137,7 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
 }
 export const followThunkCreator = (userID: number) => {
     return (dispatch: any) => {
+
         dispatch(setFollowingInProgress(true, userID))
         followAPI.followHandler(userID)
             .then((resultCode: number) => {
@@ -149,6 +150,7 @@ export const followThunkCreator = (userID: number) => {
 }
 export const unFollowThunkCreator = (userID: number) => {
     return (dispatch: any) => {
+
         dispatch(setFollowingInProgress(true, userID))
         followAPI.unFollowHander(userID)
             .then((resultCode: number) => {

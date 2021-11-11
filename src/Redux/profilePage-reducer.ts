@@ -1,4 +1,6 @@
 import {profilePageType, profileType} from "./store"
+import {profileAPI} from "../API/api";
+
 
 const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
@@ -46,7 +48,7 @@ export const profilePageReducer = (state: profilePageType = initialState, action
             return stateCopy
         }
         case SET_USER_PROFILE: {
-            return {...state, profile:action.profile}
+            return {...state, profile: action.profile}
         }
     }
     return state
@@ -69,5 +71,13 @@ export const setUserProfile = (profile: profileType): SetUserProfileType => {
         type: SET_USER_PROFILE,
         profile
     }
+}
 
+export const getProfileThunkCreator = (userID: string) => {
+    return (dispatch: any) => {
+        profileAPI.getProfile(userID)
+            .then((data: profileType) => {
+                dispatch(setUserProfile(data))
+            })
+    }
 }

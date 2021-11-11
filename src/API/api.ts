@@ -1,4 +1,5 @@
 import {usersType} from "../Redux/users-reducer";
+import {profileType} from "../Redux/store";
 
 const {default: axios} = require('axios');
 
@@ -34,13 +35,28 @@ type followResponseType = {
 }
 
 export const followAPI = {
-    followHandler (id:number){
+    followHandler(id: number) {
         return instance.post(`follow/${id}`)
             .then((response: followResponseType) => response.data.resultCode)
     },
-    unFollowHander (id:number){
+    unFollowHander(id: number) {
         return instance.delete(`follow/${id}`)
             .then((response: followResponseType) => response.data.resultCode)
     }
 }
+type responseType = {
+    data: profileType
+}
 
+export const profileAPI = {
+    getProfile(userId: string) {
+        return instance.get(`profile/${userId}`)
+            .then((response: responseType) => response.data)
+    }
+}
+
+export const authAPI = {
+    getAuth() {
+        return instance.get(`auth/me`)
+    }
+}

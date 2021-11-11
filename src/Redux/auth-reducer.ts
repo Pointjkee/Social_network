@@ -1,3 +1,5 @@
+import {authAPI} from "../API/api";
+
 const SET_USER_DATA = 'SET_USER_DATA'
 
 const initialState = {
@@ -38,4 +40,24 @@ export type setUserDataAC = {
 export const setAuthUserData = (id: number, email: string, login: string): setUserDataAC => {
     return {type: SET_USER_DATA, data: {id, email, login}}
 }
+type authType = {
+    data: {
+        data: {
+            id: number,
+            email: string,
+            login: string,
+        },
+        resultCode: number,
+        messages: string[]
+    }
+}
 
+export const authThunk = () => (dispatch: any) =>{
+    return  authAPI.getAuth()
+        .then((response: authType) => {
+            if (response.data.resultCode === 0) {
+                dispatch(setAuthUserData(response.data.data.id, response.data.data.email, response.data.data.login))
+            }
+        })
+
+}

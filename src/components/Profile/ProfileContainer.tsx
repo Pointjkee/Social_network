@@ -2,16 +2,10 @@ import React from 'react';
 import {Profile} from "./Profile";
 import {postType, profileType} from "../../Redux/store";
 import {connect} from "react-redux";
-import {addPost, setUserProfile, updateNewPostText} from "../../Redux/profilePage-reducer";
+import {addPost, getProfileThunkCreator, updateNewPostText} from "../../Redux/profilePage-reducer";
 import {AppStateType} from '../../Redux/storeRedux';
 import {RouteComponentProps, withRouter} from 'react-router';
 
-const {default: axios} = require('axios');
-
-
-type responseType = {
-    data: profileType
-}
 type PathParamsType = {
     userId?: string
 }
@@ -20,15 +14,14 @@ type ProfilePropsType = RouteComponentProps<PathParamsType> & {
     newPostText?: string,
     addPost: () => void,
     updateNewPostText: (newText: string) => void,
-    setUserProfile: (profile: profileType) => void,
     profile: profileType | null,
     match: {
         params: {
             userId: string
         }
-    }
+    },
+    getProfileThunkCreator: any
 }
-
 
 class ProfileContainer extends React.Component<ProfilePropsType> {
 
@@ -37,15 +30,12 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
         if (!userId) {
             userId = '2'
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/`+ userId)                     //ajax-запрос
-            .then((response: responseType) => {
-                this.props.setUserProfile(response.data)
-            })
+        this.props.getProfileThunkCreator(userId)
     }
 
     render() {
         return (
-            <Profile {...this.props} profile={this.props.profile} />
+            <Profile {...this.props} profile={this.props.profile}/>
         )
     }
 }
@@ -65,7 +55,7 @@ export default connect(mapStateToProps,
     {
         addPost,
         updateNewPostText,
-        setUserProfile,
+        getProfileThunkCreator
     }
 )(WithUrlDataContainerComponent)
 
