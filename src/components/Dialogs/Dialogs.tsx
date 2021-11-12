@@ -4,10 +4,12 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from './Messages/Message';
 import {messagesPageType} from "../../Redux/store";
 
-type DialogsPropsType = {
+
+export type DialogsPropsType = {
     onNewMessageChange: (text: string) => void
     sendMessageClick: () => void
     messagesPage: messagesPageType
+    isAuth: boolean
 }
 export const Dialogs = (props: DialogsPropsType) => {
     const onNewMessageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -17,6 +19,7 @@ export const Dialogs = (props: DialogsPropsType) => {
     const sendMessageClick = () => {
         props.sendMessageClick()
     }
+
     return (
         <div className={d.dialogs}>
             <div className={d.dialogsItems}>

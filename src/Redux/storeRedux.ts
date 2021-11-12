@@ -7,15 +7,15 @@ import thunkMiddleware  from "redux-thunk"
 
 
 
-let reducers = combineReducers({
+let reducer = combineReducers({
     profilePage: profilePageReducer,
     messagesPage: messagesPageReducer,
     usersPage: usersReducer,
     auth: authReducer,
 })
-export type AppStateType = ReturnType<typeof reducers>
+export type AppStateType = ReturnType<typeof reducer>
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware))
+let store = createStore(reducer, applyMiddleware(thunkMiddleware))
 
 //@ts-ignore
 window.store = store

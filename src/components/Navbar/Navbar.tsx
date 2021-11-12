@@ -5,7 +5,7 @@ import classes from './Navbar.module.css'
 export const Navbar = () => {
     return (
         <nav className={classes.navbar}>
-            <div className={classes.item}><NavLink to ='/profile' activeClassName={classes.activeLink}>Profile</NavLink></div>
+            <div className={classes.item}><NavLink to ='/profile/20082' activeClassName={classes.activeLink}>Profile</NavLink></div>
             <div className={classes.item}><NavLink to='/dialogs' activeClassName={classes.activeLink}>Messages</NavLink></div>
             <div className={classes.item}><NavLink to='/friends' activeClassName={classes.activeLink}>Friends</NavLink></div>
             <div className={classes.item}><NavLink to='/News' activeClassName={classes.activeLink}>News</NavLink></div>
