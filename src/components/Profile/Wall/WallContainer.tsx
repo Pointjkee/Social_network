@@ -1,6 +1,6 @@
 import React from 'react';
 import {profilePageType} from "../../../Redux/store";
-import {updateNewPostText, addPost} from '../../../Redux/profilePage-reducer';
+import { addPost} from '../../../Redux/profilePage-reducer';
 import {Wall} from "./Wall";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../Redux/storeRedux";
@@ -15,4 +15,4 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export const WallContainer = connect(mapStateToProps, {updateNewPostText,addPost})(Wall)
+export const WallContainer = connect(mapStateToProps, {addPost})(Wall)

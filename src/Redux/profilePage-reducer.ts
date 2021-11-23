@@ -3,73 +3,74 @@ import {profileAPI} from "../API/api";
 
 
 const ADD_POST = "ADD-POST"
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
+const SET_STATUS = "SET_STATUS"
 
 export type AddPostActionType = {
     type: 'ADD-POST',
-    // newPostText: string,
+    text: string
 }
-export type ChangeNewTextActionType = {
-    type: 'UPDATE-NEW-POST-TEXT',
-    newText: string,
-}
+
 export type SetUserProfileType = {
     type: "SET_USER_PROFILE",
     profile: profileType | null
 }
+export type SetStatusType = {
+    type: 'SET_STATUS',
+    status: string,
+}
+
 const initialState = {
     post: [
         {id: 1, message: 'Hi', likesCounter: 12},
         {id: 2, message: 'How are u?', likesCounter: 6},
     ],
-    newPostText: 'IT-incubator',
-    profile: null
+    profile: null,
+    status: '',
 }
-type ActionsType = AddPostActionType | ChangeNewTextActionType | SetUserProfileType
+type ActionsType = AddPostActionType | SetUserProfileType | SetStatusType
 
 export const profilePageReducer = (state: profilePageType = initialState, action: ActionsType) => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
                 id: 5,
-                message: state.newPostText,
+                message: action.text,
                 likesCounter: 0,
             }
             let stateCopy = {...state}
             stateCopy.post = [...state.post]
             stateCopy.post.push(newPost)
-            stateCopy.newPostText = ''
-            return stateCopy
-        }
-        case UPDATE_NEW_POST_TEXT: {
-            let stateCopy = {...state}
-            stateCopy.newPostText = action.newText
             return stateCopy
         }
         case SET_USER_PROFILE: {
             return {...state, profile: action.profile}
         }
+        case SET_STATUS: {
+            return {...state, status: action.status}
+        }
     }
     return state
 }
 
-export const addPost = (): AddPostActionType => {
+export const addPost = (text: string): AddPostActionType => {
     return {
-        type: ADD_POST
+        type: ADD_POST,
+        text
     }
 }
 
-export const updateNewPostText = (newText: string): ChangeNewTextActionType => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText
-    }
-}
 export const setUserProfile = (profile: profileType): SetUserProfileType => {
     return {
         type: SET_USER_PROFILE,
         profile
+    }
+}
+
+export const setStatus = (status: string): SetStatusType => {
+    return {
+        type: SET_STATUS,
+        status
     }
 }
 
@@ -81,3 +82,28 @@ export const getProfileThunkCreator = (userID: string) => {
             })
     }
 }
+type resStatusType = {
+    data: string,
+}
+
+export const getStatus = (userID: string) => (dispatch: any) => {
+    profileAPI.getStatus(userID)
+        .then((res: resStatusType) => {
+            dispatch(setStatus(res.data))
+        })
+}
+type resUpdateStatusType = {
+    resultCode: number,
+    messages: string[],
+    data: {}
+}
+
+export const updateStatus = (status: string) => (dispatch: any) => {
+    profileAPI.updateStatus(status)
+        .then((res: resUpdateStatusType) => {
+            if (res.resultCode === 0) {
+                dispatch(setStatus(status))
+            }
+        })
+}
+

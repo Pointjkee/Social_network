@@ -1,14 +1,12 @@
 import {ActionsTypes, messagesPageType} from "./store"
 
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT"
+
 const SEND_MESSAGE = "SEND_MESSAGE"
 
-export type NewMessageTextActionType = {
-    type: 'UPDATE_NEW_MESSAGE_TEXT',
-    text: string,
-}
+
 export type SendMessageActionType = {
-    type: 'SEND_MESSAGE'
+    type: 'SEND_MESSAGE',
+    message: string
 }
 
 let initialState = {
@@ -21,38 +19,23 @@ let initialState = {
         {id: 2, message: 'How are u?'},
         {id: 3, message: 'Where are u?'}
     ],
-    newMessageText: ' '
 }
 
 export const messagesPageReducer = (state: messagesPageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_TEXT: {
-            let stateCopy = {...state}
-            stateCopy.newMessageText = action.text
-            return stateCopy
-        }
         case SEND_MESSAGE: {
-            let body = state.newMessageText
             let stateCopy = {...state}
             stateCopy.messages = [...state.messages]
-            stateCopy.messages.push({id: 4, message: body})
-            stateCopy.newMessageText = ''
+            stateCopy.messages.push({id: 4, message: action.message})
             return stateCopy;
         }
-          }
+    }
     return state
 }
 
-//action creator для dialogs.tsx
-
-export const sendMessageClick = (): SendMessageActionType => {
+export const sendMessageClick = (message: string): SendMessageActionType => {
     return {
-        type: SEND_MESSAGE
-    }
-}
-export const onNewMessageChange = (text: string): NewMessageTextActionType => {
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        text: text
+        type: SEND_MESSAGE,
+        message,
     }
 }

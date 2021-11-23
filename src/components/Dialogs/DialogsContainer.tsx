@@ -1,5 +1,5 @@
-import {sendMessageClick, onNewMessageChange} from '../../Redux/messagesPage-reducer';
-import {Dialogs, DialogsPropsType} from "./Dialogs";
+import {sendMessageClick} from '../../Redux/messagesPage-reducer';
+import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {messagesPageType} from "../../Redux/store";
 import {AppStateType} from "../../Redux/storeRedux";
@@ -17,7 +17,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export default  compose<React.ComponentType>(
-    connect(mapStateToProps, {onNewMessageChange, sendMessageClick}),
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {sendMessageClick}),
     withAuthRedirect,
 )(Dialogs)

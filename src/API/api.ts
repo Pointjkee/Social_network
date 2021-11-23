@@ -52,7 +52,15 @@ export const profileAPI = {
     getProfile(userId: string) {
         return instance.get(`profile/${userId}`)
             .then((response: responseType) => response.data)
-    }
+    },
+    getStatus(userId: string) {
+        return instance.get(`profile/status/${userId}`)
+            // .then((response: any) => response.data)
+    },
+    updateStatus(status:string) {
+        return instance.put(`profile/status/`, {status})
+            .then((response: any) => response.data)
+    },
 }
 
 export const authAPI = {
@@ -60,3 +68,4 @@ export const authAPI = {
         return instance.get(`auth/me`)
     }
 }
+

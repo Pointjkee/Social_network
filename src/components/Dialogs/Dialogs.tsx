@@ -1,25 +1,16 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import d from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from './Messages/Message';
 import {messagesPageType} from "../../Redux/store";
-
+import {DialogForm} from "./DialogForm";
 
 export type DialogsPropsType = {
-    onNewMessageChange: (text: string) => void
-    sendMessageClick: () => void
+    sendMessageClick: (message: string) => void
     messagesPage: messagesPageType
     isAuth: boolean
 }
 export const Dialogs = (props: DialogsPropsType) => {
-    const onNewMessageChange = (e: ChangeEvent<HTMLInputElement>) => {
-        let text = e.currentTarget.value
-        props.onNewMessageChange(text)
-    }
-    const sendMessageClick = () => {
-        props.sendMessageClick()
-    }
-
     return (
         <div className={d.dialogs}>
             <div className={d.dialogsItems}>
@@ -29,18 +20,10 @@ export const Dialogs = (props: DialogsPropsType) => {
                 <div>
                     {props.messagesPage.messages.map(el => <Message message={el.message} id={el.id}/>)}
                 </div>
-                <div>
-                    <input size={40}
-                           value={props.messagesPage.newMessageText}
-                           onChange={onNewMessageChange}/>
-                </div>
-                <div>
-                    <button onClick={sendMessageClick}
-                            className={d.button}>
-                        Send
-                    </button>
-                </div>
+                <DialogForm sendMessage={props.sendMessageClick}/>
+
             </div>
         </div>
+
     )
 }

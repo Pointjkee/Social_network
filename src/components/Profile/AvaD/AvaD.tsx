@@ -5,7 +5,9 @@ import {Preloader} from "../../Common/Preloader/Preloader";
 import {ProfileStatus} from "./ProfileStatus";
 
 type propsType = {
-    profile: profileType | null
+    profile: profileType | null,
+    status: string,
+    updateStatus: (status: string) => void,
 }
 
 export const AvaD = (props: propsType) => {
@@ -15,7 +17,7 @@ export const AvaD = (props: propsType) => {
     return (
         <div className={classes.avaD}>
             <div className={classes.status}>
-                <ProfileStatus status={'1'}/>
+                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
             </div>
             <div className={classes.ava}>
                 <img src={props.profile.photos.large}/>
