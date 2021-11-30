@@ -1,11 +1,22 @@
 import React from 'react';
 import {Formik} from "formik";
 import * as yup from 'yup'
+import {connect} from 'react-redux';
+import {login} from "../../Redux/auth-reducer";
+import {Redirect} from 'react-router-dom';
+import {AppStateType} from "../../Redux/storeRedux";
 
-export const Login = () => {
+type LoginPropsType = {
+    login: any
+    isAuth?: boolean
+}
+const Login = (props: LoginPropsType) => {
+    if (props.isAuth){
+        return <Redirect to={'/profile/20082'}/>
+    }
     return <div>
         <h1>Login</h1>
-        <LoginForm/>
+        <LoginForm login={props.login}/>
     </div>
 }
 
@@ -14,7 +25,7 @@ const validationSchema = yup.object().shape({
     password: yup.string().required('Напишите что-нибудь').max(20, 'Слишком много!')
 })
 
-export const LoginForm = () => (
+export const LoginForm = (props: LoginPropsType) => (
     <Formik
         initialValues={{
             login: '',
@@ -26,6 +37,7 @@ export const LoginForm = () => (
         onSubmit={(values, {setSubmitting, resetForm}) => {
             setSubmitting(true)
             setTimeout(() => {
+                props.login(values.login, values.password, values.rememberMe)
                 resetForm()
                 setSubmitting(false)
             }, 500)
@@ -47,6 +59,7 @@ export const LoginForm = () => (
                     <input
                         id="password"
                         placeholder="Password"
+                        type={'password'}
                         {...props.getFieldProps("password")}
                     />
                     {props.errors.password && props.touched.password ? (
@@ -72,6 +85,12 @@ export const LoginForm = () => (
         )}
     </Formik>
 )
+
+const mapStateToProps = (state: AppStateType) => ({
+    isAuth: state.auth.isAuth
+})
+export default connect(mapStateToProps, {login})(Login)
+
 
 /*
 export const LoginForm = () => {
