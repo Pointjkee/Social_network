@@ -31,22 +31,28 @@ type ProfilePropsType = RouteComponentProps<PathParamsType> & {
     getStatus: (userID: string) => void,
     updateStatus: (status: string) => void,
     status: string,
+    authUserId: number | null,
+    isAuth: boolean,
 }
 
 class ProfileContainer extends React.Component<ProfilePropsType> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId
-        if (!userId) {
-            userId = '20082'
+        if (this.props.authUserId) {
+            if (!userId) {
+                userId = this.props.authUserId.toString()
+            }
         }
+
         this.props.getProfileThunkCreator(userId)
         this.props.getStatus(userId)
-       }
+    }
 
     render() {
         return (
-            <Profile {...this.props} profile={this.props.profile}
+            <Profile {...this.props}
+                     profile={this.props.profile}
                      status={this.props.status}
                      updateStatus={this.props.updateStatus}
             />
@@ -57,11 +63,15 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 type profileTypeForMap = {
     profile: profileType | null,
     status: string | null,
+    authUserId: number | null,
+    isAuth: boolean,
 }
 const mapStateToProps = (state: AppStateType): profileTypeForMap => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
+        authUserId: state.auth.id,
+        isAuth: state.auth.isAuth,
     }
 }
 

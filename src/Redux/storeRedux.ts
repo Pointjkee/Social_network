@@ -4,6 +4,7 @@ import {messagesPageReducer} from "./messagesPage-reducer";
 import {usersReducer} from "./users-reducer";
 import {authReducer} from "./auth-reducer";
 import thunkMiddleware from "redux-thunk"
+import {appReducer} from "./app-reducer";
 
 
 let reducer = combineReducers({
@@ -11,6 +12,7 @@ let reducer = combineReducers({
     messagesPage: messagesPageReducer,
     usersPage: usersReducer,
     auth: authReducer,
+    app: appReducer,
 
 })
 export type AppStateType = ReturnType<typeof reducer>
