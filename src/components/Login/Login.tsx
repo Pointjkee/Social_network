@@ -44,7 +44,6 @@ export const LoginForm = (props: LoginPropsType) => {
             setSubmitting(true)
             setTimeout(() => {
                 props.login(values.login, values.password, values.rememberMe)
-
                 resetForm()
                 setSubmitting(false)
             }, 500)
