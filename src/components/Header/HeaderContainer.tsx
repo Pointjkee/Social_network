@@ -8,7 +8,7 @@ import {AppStateType} from "../../Redux/storeRedux";
 type HeaderPropsType = {
     isAuth: boolean,
     login: string | null,
-    loginOut: any,
+    loginOut: () => void,
 }
 
 class HeaderContainer extends React.Component<HeaderPropsType> {
@@ -28,5 +28,5 @@ const mapStateToprops = (state: AppStateType): mapStateTopPropsType => ({
     login: state.auth.login,
 })
 
-export default connect(mapStateToprops, { loginOut})(HeaderContainer)
+export default connect(mapStateToprops, {loginOut})(HeaderContainer)
 

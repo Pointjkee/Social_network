@@ -1,4 +1,5 @@
 import {authAPI} from "../API/api";
+import {Dispatch} from "redux";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 
@@ -89,7 +90,7 @@ export const login = (email: string, password: string, rememberMe: boolean) => (
         })
 }
 
-export const loginOut = () => (dispatch: any) => {
+export const loginOut = () => (dispatch: Dispatch) => {
     return authAPI.logOut()
         .then((response: authType) => {
             if (response.data.resultCode === 0) {

@@ -6,7 +6,7 @@ type propsType = {
     post: Array<postType>
 }
 
-export const MyPost = (props: propsType) => {
+export const MyPost = React.memo((props: propsType) => {
     return (
         <div>
             {props.post.map((el: postType) =>
@@ -15,4 +15,4 @@ export const MyPost = (props: propsType) => {
                       likesCounter={el.likesCounter}/>)}
         </div>
     )
-}
+})

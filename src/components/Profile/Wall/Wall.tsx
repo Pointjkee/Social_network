@@ -9,7 +9,8 @@ type WallPropsType = {
     profilePage: profilePageType
     addPost: (text: string) => void
 }
-export const Wall = (props: WallPropsType) => {
+
+export const Wall = React.memo((props: WallPropsType) => {
     return (
         <div className={classes.wall}>
             <div className={classes.mainInput}>
@@ -23,4 +24,4 @@ export const Wall = (props: WallPropsType) => {
             <MyPost post={props.profilePage.post}/>
         </div>
     )
-}
+})

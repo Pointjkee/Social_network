@@ -4,7 +4,7 @@ import React from "react";
 import {dialogsType} from "../../../Redux/store";
 
 
-export const DialogItem = (props: dialogsType) => {
+export const DialogItem = React.memo((props: dialogsType) => {
     return (
         <div className={d.dialog}>
             <NavLink to={'/dialogs/' + props.id}
@@ -12,4 +12,4 @@ export const DialogItem = (props: dialogsType) => {
             </NavLink>
         </div>
     )
-}
+})

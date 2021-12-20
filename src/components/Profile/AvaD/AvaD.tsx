@@ -10,7 +10,7 @@ type propsType = {
     updateStatus: (status: string) => void,
 }
 
-export const AvaD = (props: propsType) => {
+export const AvaD = React.memo( (props: propsType) => {
     if (!props.profile) {
         return <Preloader/>
     }
@@ -31,4 +31,4 @@ export const AvaD = (props: propsType) => {
             </div>
         </div>
     )
-}
+})
