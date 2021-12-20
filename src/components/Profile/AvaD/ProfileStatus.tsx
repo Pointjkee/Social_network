@@ -22,7 +22,6 @@ export const ProfileStatus = React.memo((props: propsType) => {
     const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
-
     return (
         <div>
             {!editMode && <div>

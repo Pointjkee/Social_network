@@ -1,7 +1,6 @@
 import {AppStateType} from "./storeRedux";
 import {usersType} from "./users-reducer";
 
-
 export const getUsers = (state: AppStateType): usersType => {
     return state.usersPage.users
 }

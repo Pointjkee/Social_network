@@ -21,7 +21,6 @@ import {
     getUsers
 } from "../../Redux/users-selectors";
 
-
 type usersPropsType = {
     users: usersType,
     pageSize: number,
@@ -30,9 +29,9 @@ type usersPropsType = {
     isFetching: boolean,
     setFollowingInProgress: (followingInProgress: boolean, userID: number) => void,
     followingInProgress: (boolean | number)[],
-    getUsersThunkCreator: any,
-    followThunkCreator: any,
-    unFollowThunkCreator: any,
+    getUsersThunkCreator: (currentPage: number, pageSize: number) => void,
+    followThunkCreator: (userID: number) => void,
+    unFollowThunkCreator: (userID: number) => void,
 }
 
 class UsersContainer extends React.Component<usersPropsType> {
@@ -72,7 +71,6 @@ const mapStateToProps = (state: AppStateType) => {
         followingInProgress: getFollowingInProgress(state),
     }
 }
-
 
 export default compose<React.ComponentType>(connect(mapStateToProps,
     {

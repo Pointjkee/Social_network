@@ -18,7 +18,7 @@ import {AppStateType} from "./Redux/storeRedux";
 import {Preloader} from "./components/Common/Preloader/Preloader";
 
 type appPropsType = {
-    initializeApp: any,
+    initializeApp: () => void,
     initialized: boolean,
 }
 
@@ -62,6 +62,5 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     }
 
 }
-
 
 export default compose(connect(mapStateToProps, {initializeApp}))(App)

@@ -8,7 +8,7 @@ import {AppStateType} from "../../Redux/storeRedux";
 
 
 type LoginPropsType = {
-    login: any
+    login: (email: string, password: string, rememberMe: boolean)=>void
     isAuth?: boolean
     loginFailed: string | null
 }

@@ -1,13 +1,4 @@
-import {ActionsTypes, messagesPageType} from "./store"
-
-
-const SEND_MESSAGE = "SEND_MESSAGE"
-
-
-export type SendMessageActionType = {
-    type: 'SEND_MESSAGE',
-    message: string
-}
+import {messagesPageType} from "./store"
 
 let initialState = {
     dialogs: [
@@ -21,9 +12,9 @@ let initialState = {
     ],
 }
 
-export const messagesPageReducer = (state: messagesPageType = initialState, action: ActionsTypes) => {
+export const messagesPageReducer = (state: messagesPageType = initialState, action: SendMessageActionType) => {
     switch (action.type) {
-        case SEND_MESSAGE: {
+        case 'messagePage/SEND_MESSAGE': {
             let stateCopy = {...state}
             stateCopy.messages = [...state.messages]
             stateCopy.messages.push({id: 4, message: action.message})
@@ -33,9 +24,8 @@ export const messagesPageReducer = (state: messagesPageType = initialState, acti
     return state
 }
 
-export const sendMessageClick = (message: string): SendMessageActionType => {
-    return {
-        type: SEND_MESSAGE,
-        message,
-    }
+export type SendMessageActionType = ReturnType<typeof sendMessageClick>
+
+export const sendMessageClick = (message: string) => {
+    return {type: 'messagePage/SEND_MESSAGE', message}
 }

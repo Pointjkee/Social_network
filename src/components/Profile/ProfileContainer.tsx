@@ -36,7 +36,6 @@ type ProfilePropsType = RouteComponentProps<PathParamsType> & {
 }
 
 class ProfileContainer extends React.Component<ProfilePropsType> {
-
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (this.props.authUserId) {
@@ -44,11 +43,9 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
                 userId = this.props.authUserId.toString()
             }
         }
-
         this.props.getProfileThunkCreator(userId)
         this.props.getStatus(userId)
     }
-
     render() {
         return (
             <Profile {...this.props}

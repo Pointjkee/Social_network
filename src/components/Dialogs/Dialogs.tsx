@@ -10,7 +10,7 @@ export type DialogsPropsType = {
     messagesPage: messagesPageType
     isAuth: boolean
 }
-export const Dialogs =React.memo( (props: DialogsPropsType) => {
+export const Dialogs = React.memo((props: DialogsPropsType) => {
     return (
         <div className={d.dialogs}>
             <div className={d.dialogsItems}>
@@ -21,7 +21,6 @@ export const Dialogs =React.memo( (props: DialogsPropsType) => {
                     {props.messagesPage.messages.map(el => <Message message={el.message} id={el.id}/>)}
                 </div>
                 <DialogForm sendMessage={props.sendMessageClick}/>
-
             </div>
         </div>
 

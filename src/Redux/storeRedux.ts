@@ -22,7 +22,6 @@ let store = createStore(reducer, applyMiddleware(thunkMiddleware))
 //@ts-ignore
 window.store = store
 
-
 export default store
 
 

@@ -2,7 +2,6 @@ import {Formik} from "formik";
 import React from "react";
 import * as yup from 'yup'
 
-
 type propsType = {
     addPost: (text: string) => void
 }

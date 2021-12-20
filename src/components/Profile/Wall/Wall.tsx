@@ -4,7 +4,6 @@ import {MyPost} from "./MyPost/MyPost";
 import {profilePageType} from "../../../Redux/store";
 import {MessageForm} from "./MessageForm";
 
-
 type WallPropsType = {
     profilePage: profilePageType
     addPost: (text: string) => void

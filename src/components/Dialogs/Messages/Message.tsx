@@ -9,6 +9,5 @@ export const Message = React.memo((props: messagesType) => {
                 {props.message}
             </div>
         </div>
-
     )
 })

@@ -2,7 +2,6 @@ import React from "react";
 import {postType} from "../../../../../Redux/store";
 import p from './Post.module.css'
 
-
 export const Post = React.memo( (props: postType) => {
         return (
         <div className={p.item}>

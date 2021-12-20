@@ -1,8 +1,9 @@
 import React from "react";
-import styles from "./Users.module.css";
+
 import userPhoto from "../../Files/img/user.png";
 import {usersType} from "../../Redux/users-reducer";
 import {NavLink} from "react-router-dom";
+import {Pagination} from "../Common/Paginator/Pagination";
 
 type usersTypeProps = {
     totalUsersCount: number,
@@ -12,31 +13,18 @@ type usersTypeProps = {
     onPageChanged: (currentPage: number) => void
     setFollowingInProgress: (followingInProgress: boolean, userID: number) => void,
     followingInProgress: (boolean | number)[],
-    unFollowThunkCreator: any,
-    followThunkCreator: any
+    followThunkCreator: (userID: number) => void,
+    unFollowThunkCreator: (userID: number) => void,
 }
 
 export const Users = (props: usersTypeProps) => {
-
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
-    let pages = []
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
-    }
-
     return (
         <div style={{color: 'black'}}>
-            <div>
-                {pages.slice(0, 10).map(t => {
-                    return <span
-                        style={{cursor: 'pointer'}}
-                        className={props.currentPage === t && styles.activePage || ''}
-                        onClick={() => {
-                            props.onPageChanged(t)
-                        }}
-                    >{t}</span>
-                })}
-            </div>
+            <Pagination currentPage={props.currentPage}
+                        onPageChanged={props.onPageChanged}
+                        totalUsersCount={props.totalUsersCount}
+                        pageSize={props.pageSize}
+            />
             {
                 props.users.map(u => {
                     const followHandler = () => {
@@ -61,7 +49,6 @@ export const Users = (props: usersTypeProps) => {
                                 : <button onClick={followHandler}
                                           disabled={props.followingInProgress.some(id => id === u.id)}>Follow</button>
                         }
-
                     </div>
                 </span>
                         <span>

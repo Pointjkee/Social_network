@@ -1,6 +1,4 @@
-import {Dispatch} from "redux";
-import {authAPI} from "../API/api";
-import {authThunk, setAuthUserData} from "./auth-reducer";
+import {authThunk} from "./auth-reducer";
 
 const initialState = {
     initialized: false
@@ -12,7 +10,7 @@ type actionType = initialACType
 
 export const appReducer = (state: initialType = initialState, action: actionType): initialType => {
     switch (action.type) {
-        case "SET_INITIALIZED": {
+        case 'app/SET_INITIALIZED': {
             return {...state, initialized: true}
         }
         default:
@@ -23,11 +21,11 @@ type initialACType = ReturnType<typeof initialAC>
 
 const initialAC = () => {
     return {
-        type: 'SET_INITIALIZED',
+        type: 'app/SET_INITIALIZED',
     } as const
 }
 
-export const initializeApp = () => (dispatch: any) => {
+export const initializeApp = () => async (dispatch: any) => {
     dispatch(authThunk())
         .then(() => {
             dispatch(initialAC())
