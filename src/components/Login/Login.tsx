@@ -32,8 +32,8 @@ export const LoginForm = (props: LoginPropsType) => {
     const loginFailed = useSelector<AppStateType, string | null>(state => state.auth.loginFailed)
     return <Formik
         initialValues={{
-            login: '',
-            password: '',
+            login: 'free@samuraijs.com',
+            password: 'free',
             rememberMe: false,
 
         }}
