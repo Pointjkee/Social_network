@@ -1,3 +1,14 @@
 .activePage {
     font-weight: bold;
 }
+.selectedPage {
+    font-weight: bold;
+}
+.pageNumber {
+    cursor: pointer;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.paginator {
+    margin-bottom: 10px;
+}
