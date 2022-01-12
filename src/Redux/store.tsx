@@ -24,28 +24,28 @@ export type messagesPageType = {
     messages: Array<messagesType>
 }
 export type profileType = {
-    userId: number
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
+    userId: number| null
+    lookingForAJob: boolean| null
+    lookingForAJobDescription: string| null
+    fullName: string| null
     contacts: {
-        github: string
-        vk: string
-        facebook: string
-        instagram: string
-        twitter: string
-        website: string
-        youtube: string
-        mainLink: string
+        github: string| null
+        vk: string| null
+        facebook: string| null
+        instagram: string| null
+        twitter: string| null
+        website: string| null
+        youtube: string| null
+        mainLink: string| null
     }
     photos: {
-        small: string
-        large: string
+        small: string| null
+        large: string| null
     }
 }
 export type profilePageType = {
     post: Array<postType>
-    profile: profileType | null,
+    profile: profileType,
     status: string
 }
 

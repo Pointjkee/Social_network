@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {
     addPost,
     getProfileThunkCreator,
-    getStatus,
+    getStatus, savePhotoTC,
     updateStatus
 } from "../../Redux/profilePage-reducer";
 import {AppStateType} from '../../Redux/storeRedux';
@@ -20,46 +20,61 @@ type ProfilePropsType = RouteComponentProps<PathParamsType> & {
     post?: Array<postType>,
     newPostText?: string,
     addPost: () => void,
-    profile: profileType | null,
+    profile: profileType,
     match: {
         params: {
             userId: string
         }
     },
-    getProfileThunkCreator: any,
+    getProfileThunkCreator: (userID: string) => void,
     setStatus: (status: string) => void,
     getStatus: (userID: string) => void,
     updateStatus: (status: string) => void,
+    savePhotoTC: (photo: File) => void,
     status: string,
-    authUserId: number | null,
+    authUserId: number,
     isAuth: boolean,
 }
 
 class ProfileContainer extends React.Component<ProfilePropsType> {
-    componentDidMount() {
+    setProfile = () => {
         let userId = this.props.match.params.userId
-        if (this.props.authUserId) {
+        if (!userId) {
+            userId = this.props.authUserId.toString()
             if (!userId) {
-                userId = this.props.authUserId.toString()
+                this.props.history.push('/login')
             }
         }
         this.props.getProfileThunkCreator(userId)
         this.props.getStatus(userId)
     }
+
+    componentDidMount() {
+        this.setProfile()
+    }
+
+    componentDidUpdate(prevProps: ProfilePropsType) {
+        if (this.props.match.params.userId !== prevProps.match.params.userId) {
+            this.setProfile()
+        }
+    }
+
     render() {
         return (
             <Profile {...this.props}
                      profile={this.props.profile}
                      status={this.props.status}
                      updateStatus={this.props.updateStatus}
+                     isOwner={+this.props.match.params.userId === this.props.authUserId}
+                     savePhotoTC={this.props.savePhotoTC}
             />
         )
     }
 }
 
 type profileTypeForMap = {
-    profile: profileType | null,
-    status: string | null,
+    profile: profileType,
+    status: string,
     authUserId: number | null,
     isAuth: boolean,
 }
@@ -79,6 +94,7 @@ export default compose<React.ComponentType>(
             getProfileThunkCreator,
             getStatus,
             updateStatus,
+            savePhotoTC
         }
     ),
     withRouter,

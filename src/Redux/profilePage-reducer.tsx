@@ -7,11 +7,30 @@ const initialState = {
         {id: 1, message: 'Hi', likesCounter: 12},
         {id: 2, message: 'How are u?', likesCounter: 6},
     ],
-    profile: null,
+    profile: {
+        userId: null,
+        lookingForAJob: null,
+        lookingForAJobDescription: null,
+        fullName: null,
+        contacts: {
+            github: null,
+            vk: null,
+            facebook: null,
+            instagram: null,
+            twitter: null,
+            website: null,
+            youtube: null,
+            mainLink: null,
+        },
+        photos: {
+            small: null,
+            large: null,
+        }
+    },
     status: '',
 }
 
-type ActionsType = AddPostActionType | SetUserProfileType | SetStatusType
+type ActionsType = AddPostActionType | SetUserProfileType | SetStatusType | setPhotoType
 
 export const profilePageReducer = (state: profilePageType = initialState, action: ActionsType) => {
     switch (action.type) {
@@ -31,6 +50,9 @@ export const profilePageReducer = (state: profilePageType = initialState, action
         }
         case 'profilePage/SET_STATUS': {
             return {...state, status: action.status}
+        }
+        case 'profilePage/SET_PHOTO': {
+            return {...state, profile: {...state.profile, photos: action.photo}}
         }
     }
     return state
@@ -63,6 +85,19 @@ export const setStatus = (status: string) => {
     } as const
 }
 
+export type setPhotoType = ReturnType<typeof setPhoto>
+export type photoType = {
+    small: string| null
+    large: string| null
+}
+
+export const setPhoto = (photo: photoType ) => {
+    return {
+        type: 'profilePage/SET_PHOTO',
+        photo
+    } as const
+}
+
 export const getProfileThunkCreator = (userID: string) => async (dispatch: Dispatch) => {
     let response = await profileAPI.getProfile(userID)
     dispatch(setUserProfile(response))
@@ -80,3 +115,10 @@ export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
     }
 }
 
+export const savePhotoTC = (photo: File) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.savePhoto(photo)
+    if (response.resultCode === 0) {
+        debugger
+        dispatch(setPhoto(response.data.photos))
+    }
+}
